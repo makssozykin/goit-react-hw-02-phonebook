@@ -7,7 +7,11 @@ export class App extends Component {
   state = {
     contacts: [],
     name: '',
+    number: '',
   };
+
+  nameInputId = nanoid();
+  numberInputId = nanoid();
 
   handleChange = e => {
     this.setState({
@@ -23,18 +27,23 @@ export class App extends Component {
         {
           id: nanoid(),
           name: this.state.name,
+          number: Number.parseInt(this.state.number),
         },
       ],
       name: '',
+      number: '',
     });
   };
 
   render() {
-    const { contacts, name } = this.state;
+    const { contacts, name, number } = this.state;
     return (
       <div>
         <FormSubmit
+          nameInputId={this.nameInputId}
+          numberInputId={this.numberInputId}
           name={name}
+          number={number}
           onChange={this.handleChange}
           onSubmit={this.handleSubmit}
         />
