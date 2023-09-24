@@ -40,6 +40,8 @@ export const FormSubmit = ({
 };
 
 FormSubmit.propTypes = {
+  nameInputId: PropTypes.string.isRequired,
+  numberInputId: PropTypes.string.isRequired,
   name: PropTypes.string.isRequired,
   number: PropTypes.string.isRequired,
   onChange: PropTypes.func.isRequired,
