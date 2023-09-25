@@ -7,10 +7,10 @@ import { Filter } from './Filter/Filter';
 export class App extends Component {
   state = {
     contacts: [
-      { id: 'id-1', name: 'Rosie Simpson', number: '459-12-56' },
-      { id: 'id-2', name: 'Hermione Kline', number: '443-89-12' },
-      { id: 'id-3', name: 'Eden Clements', number: '645-17-79' },
-      { id: 'id-4', name: 'Annie Copeland', number: '227-91-26' },
+      { id: nanoid(), name: 'Rosie Simpson', number: '459-12-56' },
+      { id: nanoid(), name: 'Hermione Kline', number: '443-89-12' },
+      { id: nanoid(), name: 'Eden Clements', number: '645-17-79' },
+      { id: nanoid(), name: 'Annie Copeland', number: '227-91-26' },
     ],
     filter: '',
     name: '',
@@ -33,13 +33,17 @@ export class App extends Component {
     });
   };
 
+  // зміна значення фільтру
+
   onChangeFilter = e => {
     this.setState({
       filter: e.target.value,
     });
   };
 
-  getVisibleContacts = () => {
+  // Отримання списку контактів
+
+  getContacts = () => {
     const { filter, contacts } = this.state;
     const normalizedFilter = filter.toLowerCase();
 
@@ -47,6 +51,8 @@ export class App extends Component {
       contact.name.toLowerCase().includes(normalizedFilter)
     );
   };
+
+  // Додавання контакту в список
 
   addContact = contact => {
     const isInContacts = this.state.contacts.some(
@@ -61,10 +67,20 @@ export class App extends Component {
       contacts: [{ id: nanoid(), ...contact }, ...prevState.contacts],
     }));
   };
+  // Видалення контакту зі списку
+
+  deleteContact = contactId => {
+    this.setState(prevState => {
+      return {
+        contacts: prevState.contacts.filter(({ id }) => id !== contactId),
+      };
+    });
+  };
 
   handleSubmit = e => {
     e.preventDefault();
     const contact = {
+      id: nanoid(),
       name: this.state.name,
       number: this.state.number,
     };
@@ -73,7 +89,7 @@ export class App extends Component {
   };
 
   render() {
-    const visibleContacts = this.getVisibleContacts();
+    const visibleContacts = this.getContacts();
     const { name, number, filter } = this.state;
     return (
       <div>
@@ -88,13 +104,15 @@ export class App extends Component {
         />
         <h1>Contacts</h1>
         {this.state.contacts.length > 0 ? (
+          // Фільтр по списку шмен контактів
           <Filter value={filter} onChangeFilter={this.onChangeFilter} />
         ) : (
           <p>Your phonebook is empty. Add first contact!</p>
         )}
 
         {this.state.contacts.length > 0 && (
-          <Contacts contacts={visibleContacts} />
+          // Список контактів
+          <Contacts contacts={visibleContacts} onDelete={this.deleteContact} />
         )}
       </div>
     );
