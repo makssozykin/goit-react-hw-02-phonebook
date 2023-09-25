@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import css from './FormSubmit.module.css';
 
 export const FormSubmit = ({
   nameInputId,
@@ -10,10 +11,11 @@ export const FormSubmit = ({
   onSubmit,
 }) => {
   return (
-    <form onSubmit={onSubmit}>
-      <label htmlFor={nameInputId}>
+    <form className={css.form} onSubmit={onSubmit}>
+      <label className={css['form-label']} htmlFor={nameInputId}>
         Name
         <input
+          className={css['form-input']}
           type="text"
           name="name"
           value={name}
@@ -22,9 +24,10 @@ export const FormSubmit = ({
           required
         />
       </label>
-      <label htmlFor={numberInputId}>
+      <label className={css['form-label']} htmlFor={numberInputId}>
         Number
         <input
+          className={css['form-input']}
           type="tel"
           name="number"
           value={number}
@@ -33,7 +36,9 @@ export const FormSubmit = ({
           required
         />
       </label>
-      <button type="submit">Add contact</button>
+      <button className={css.formBtn} type="submit">
+        Add contact
+      </button>
     </form>
   );
 };

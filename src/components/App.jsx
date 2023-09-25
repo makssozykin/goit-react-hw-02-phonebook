@@ -92,8 +92,21 @@ export class App extends Component {
     const visibleContacts = this.getContacts();
     const { name, number, filter } = this.state;
     return (
-      <div>
-        <h1>Phonebook</h1>
+      <div
+        style={{
+          display: 'flex',
+          flexDirection: 'column',
+          justifyContent: 'center',
+          alignItems: 'center',
+        }}
+      >
+        <h1
+          style={{
+            marginBottom: '16px',
+          }}
+        >
+          Phonebook
+        </h1>
         <FormSubmit
           nameInputId={this.nameInputId}
           numberInputId={this.numberInputId}
@@ -102,12 +115,26 @@ export class App extends Component {
           onChange={this.handleChange}
           onSubmit={this.handleSubmit}
         />
-        <h1>Contacts</h1>
+        <h2
+          style={{
+            margin: 0,
+          }}
+        >
+          Contacts
+        </h2>
         {this.state.contacts.length > 0 ? (
           // Фільтр по списку шмен контактів
           <Filter value={filter} onChangeFilter={this.onChangeFilter} />
         ) : (
-          <p>Your phonebook is empty. Add first contact!</p>
+          <p
+            style={{
+              color: '#0b171c',
+              fontSize: '48px',
+              fontWeight: 'bold',
+            }}
+          >
+            Your phonebook is empty. Add first contact!
+          </p>
         )}
 
         {this.state.contacts.length > 0 && (
