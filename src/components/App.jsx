@@ -13,24 +13,6 @@ export class App extends Component {
       { id: nanoid(), name: 'Annie Copeland', number: '227-91-26' },
     ],
     filter: '',
-    name: '',
-    number: '',
-  };
-
-  nameInputId = nanoid();
-  numberInputId = nanoid();
-
-  reset = () => {
-    this.setState({
-      name: '',
-      number: '',
-    });
-  };
-
-  handleChange = e => {
-    this.setState({
-      [e.target.name]: e.target.value,
-    });
   };
 
   // зміна значення фільтру
@@ -77,20 +59,9 @@ export class App extends Component {
     });
   };
 
-  handleSubmit = e => {
-    e.preventDefault();
-    const contact = {
-      id: nanoid(),
-      name: this.state.name,
-      number: this.state.number,
-    };
-    this.addContact(contact);
-    this.reset();
-  };
-
   render() {
     const visibleContacts = this.getContacts();
-    const { name, number, filter } = this.state;
+    const { filter } = this.state;
     return (
       <div
         style={{
@@ -107,14 +78,7 @@ export class App extends Component {
         >
           Phonebook
         </h1>
-        <FormSubmit
-          nameInputId={this.nameInputId}
-          numberInputId={this.numberInputId}
-          name={name}
-          number={number}
-          onChange={this.handleChange}
-          onSubmit={this.handleSubmit}
-        />
+        <FormSubmit addContact={this.addContact} />
         <h2
           style={{
             margin: 0,
@@ -131,6 +95,7 @@ export class App extends Component {
               color: '#0b171c',
               fontSize: '48px',
               fontWeight: 'bold',
+              textAlign: 'center',
             }}
           >
             Your phonebook is empty. Add first contact!
