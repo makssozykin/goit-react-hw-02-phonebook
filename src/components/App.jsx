@@ -20,6 +20,13 @@ export class App extends Component {
   nameInputId = nanoid();
   numberInputId = nanoid();
 
+  reset = () => {
+    this.setState({
+      name: '',
+      number: '',
+    });
+  };
+
   handleChange = e => {
     this.setState({
       [e.target.name]: e.target.value,
@@ -41,20 +48,28 @@ export class App extends Component {
     );
   };
 
+  addContact = contact => {
+    const isInContacts = this.state.contacts.some(
+      ({ name }) => name.toLowerCase() === contact.name.toLowerCase()
+    );
+
+    if (isInContacts) {
+      alert(`${contact.name} is already in contacts`);
+      return;
+    }
+    this.setState(prevState => ({
+      contacts: [{ id: nanoid(), ...contact }, ...prevState.contacts],
+    }));
+  };
+
   handleSubmit = e => {
     e.preventDefault();
-    this.setState({
-      contacts: [
-        ...this.state.contacts,
-        {
-          id: nanoid(),
-          name: this.state.name,
-          number: this.state.number,
-        },
-      ],
-      name: '',
-      number: '',
-    });
+    const contact = {
+      name: this.state.name,
+      number: this.state.number,
+    };
+    this.addContact(contact);
+    this.reset();
   };
 
   render() {
@@ -62,6 +77,7 @@ export class App extends Component {
     const { name, number, filter } = this.state;
     return (
       <div>
+        <h1>Phonebook</h1>
         <FormSubmit
           nameInputId={this.nameInputId}
           numberInputId={this.numberInputId}

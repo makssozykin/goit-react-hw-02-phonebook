@@ -11,7 +11,6 @@ export const FormSubmit = ({
 }) => {
   return (
     <form onSubmit={onSubmit}>
-      <h1>Phonebook</h1>
       <label htmlFor={nameInputId}>
         Name
         <input
@@ -34,7 +33,7 @@ export const FormSubmit = ({
           required
         />
       </label>
-      <button type="submit">Add</button>
+      <button type="submit">Add contact</button>
     </form>
   );
 };
